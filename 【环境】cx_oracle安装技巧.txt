@@ -1,0 +1,21 @@
+1. 下载orcle-ubuntu客户端：https://download.oracle.com/otn_software/linux/instantclient/193000/instantclient-sqlplus-linux.x64-19.3.0.0.0dbru.zip
+   instantclient-basiclite-linux.x64-19.3.0.0.0dbru.zip
+   instantclient-sdk-linux.x64-19.3.0.0.0dbru.zip
+   instantclient-sqlplus-linux.x64-19.3.0.0.0dbru.zip
+
+2. 复制到/root/下，解压
+   unzip instantclient-basiclite-linux.x64-19.3.0.0.0dbru.zip
+   unzip instantclient-sdk-linux.x64-19.3.0.0.0dbru.zip
+   unzip instantclient-sqlplus-linux.x64-19.3.0.0.0dbru.zip
+
+
+3. 打开网页有教程：https://oracle.github.io/odpi/doc/installation.html#linux
+   
+   jupyter内执行如下：
+   !apt-get install libaio1
+   !sh -c "echo /root/instantclient_19_3 > /etc/ld.so.conf.d/oracle-instantclient.conf"
+   !ldconfig
+   !sh -c "echo export LD_LIBRARY_PATH=/root/instantclient_19_3:$LD_LIBRARY_PATH >> /root/.bashrc"
+   !source /root/.bashrc
+
+4. 测试cx_oracle包，没有问题。
