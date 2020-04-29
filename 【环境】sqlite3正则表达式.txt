@@ -1,0 +1,63 @@
+1. SQLite3加载正则化功能点
+
+    1.1 安装必要库：
+        
+          sudo apt-get install sqlite3-pcre
+          
+          查看： /usr/lib/sqlite3/pcre.so
+    
+    1.2 配置SQLite3加载配置文件
+    
+          touch ~/.sqliterc
+          echo '.load /usr/lib/sqlite3/pcre.so' >> ~/.sqliterc
+          
+2. terminal操作
+          
+    2.1 直接运行即可
+            
+            > sqlite3 xxxx.db
+            > select count(1) from data where community regexp '.*';
+            
+    2.2 若没有~/.sqliterc
+            
+            > sqlite3 xxxx.db
+            > .load /usr/lib/sqlite3/pcre.so;
+            > select count(1) from data where community regexp '.*';
+          
+3. python加载
+          
+    3.1 接口直接调用
+          
+          conn=sqlite3.connect('gaode_family_address.sqlite') # 如果路径里面没有这个数据库，会自动创建
+          conn.enable_load_extension(True)
+          
+          #加载
+          ext = con.cursor()
+          ext.execute("SELECT load_extension('/usr/lib/sqlite3/pcre.so')")
+          
+          #sql一般处理
+          ext.execute("select count(1) from data where community regexp '.*'")
+          print(ext.fetchall())
+          
+          conn.close()
+    
+    3.2 pandas调用
+      
+          conn=sqlite3.connect('gaode_family_address.sqlite')#如果路径里面没有这个数据库，会自动创建
+          
+          #加载
+          conn.enable_load_extension(True)
+          sql = "SELECT load_extension('/usr/lib/sqlite3/pcre.so')"
+          print(pd.read_sql(sql,conn)) 
+          
+          #sql一般处理
+          sql = "select count(1) from data where community regexp '.*'"
+          test = pd.read_sql(sql,conn) #完成数据库的查询读取到数据框dataframe 中
+          print(test.head())
+          
+          conn.close()
+
+
+
+
+
